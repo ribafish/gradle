@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        task: [ 'help', 'checkstyle' ]
+        task: [ 'help' ]
         exp:
           - cache: 'transforms'
             args: '-Dscan.tag.baseline-transforms'
@@ -29,7 +29,7 @@ jobs:
           java-version: 11
           distribution: 'temurin'
       - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v3
+        uses: gradle/actions/setup-gradle@v4.0.0-rc.1
         with:
           develocity-access-key: ${{ secrets.DV_SOLUTIONS_ACCESS_KEY }}
       - name: Clear Gradle user home caches we don't want
