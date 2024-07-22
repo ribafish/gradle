@@ -32,6 +32,12 @@ jobs:
         uses: gradle/actions/setup-gradle@v4.0.0-rc.1
         with:
           develocity-access-key: ${{ secrets.DV_SOLUTIONS_ACCESS_KEY }}
+          gradle-home-cache-excludes: |
+            caches/build-cache-1
+            caches/transforms-*
+            caches/*/transforms
+            caches/*/kotlin-dsl
+            caches/*/groovy-dsl
       - name: Clear Gradle user home caches we don't want
         env:
           GRADLE_CACHE_REMOTE_PUSH: "true"
@@ -40,6 +46,8 @@ jobs:
         run: |
           cache='${{ matrix.exp.cache }}'
           args='${{ matrix.exp.args }}'
+
+          ls -lah ~/.gradle/caches
 
           echo "Test caches/*/$cache removal with $args"
 
