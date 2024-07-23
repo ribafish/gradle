@@ -48,6 +48,7 @@ jobs:
           args='${{ matrix.exp.args }}'
 
           ls -lah ~/.gradle/caches
+          ls -lah ~/.gradle/caches/8.9
 
           echo "Test caches/*/$cache removal with $args"
 

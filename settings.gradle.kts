@@ -536,3 +536,27 @@ class PlatformBuilder(
 }
 
 // endregion
+val isCI = providers.environmentVariable("CI").isPresent
+develocity {
+    server = "https://ge.solutions-team.gradle.com"
+    buildScan {
+        uploadInBackground = !isCI
+        publishing.onlyIf { it.isAuthenticated }
+        obfuscation {
+            ipAddresses { addresses -> addresses.map { "0.0.0.0" } }
+        }
+    }
+}
+
+buildCache {
+    local {
+        isEnabled = true
+    }
+
+    remote(develocity.buildCache) {
+        server = "https://ge.solutions-team.gradle.com"
+        isEnabled = true
+        val accessKey = System.getenv("DEVELOCITY_ACCESS_KEY")
+        isPush = isCI && !accessKey.isNullOrEmpty()
+    }
+}
